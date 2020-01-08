@@ -1,0 +1,19 @@
+#!/usr/bin/make
+# Automatically generated from RHIDE projects, don't edit
+#
+
+OBJFILES=\
+	./tvhc$(ExOBJ) 
+
+LIBRARIES=
+
+tvhc$(ExEXE):: \
+	./tvhc$(ExOBJ) \
+	$(MAKEFILE_DEPS) 
+	$(RHIDE_COMPILE_LINK)
+
+./tvhc$(ExOBJ):: tvhc.cc \
+	tvhc.h \
+	$(MAKEFILE_DEPS) 
+	$(RHIDE_COMPILE_CC)
+

@@ -1,0 +1,26 @@
+#!/usr/bin/make
+# Automatically generated from RHIDE projects, don't edit
+#
+
+OBJFILES=\
+	./bhelp$(ExOBJ) \
+	./thelp$(ExOBJ) 
+
+LIBRARIES=
+
+thelp$(ExEXE):: \
+	./bhelp$(ExOBJ) \
+	./thelp$(ExOBJ) \
+	$(MAKEFILE_DEPS) 
+	$(RHIDE_COMPILE_LINK)
+
+./bhelp$(ExOBJ):: bhelp.cc \
+	bhelp.h \
+	$(MAKEFILE_DEPS) 
+	$(RHIDE_COMPILE_CC)
+
+./thelp$(ExOBJ):: thelp.cc \
+	bhelp.h \
+	$(MAKEFILE_DEPS) 
+	$(RHIDE_COMPILE_CC)
+

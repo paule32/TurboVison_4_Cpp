@@ -1,0 +1,118 @@
+# Makefile for MS VC 5.0-6.0
+# Modified for use with MS NMAKE 
+# Run: nmake -f Makefile.nmk all
+
+# Add here -IPATH_TO_MSVC_HEADERS (to both variables)
+# example: -ID:\MVS\VC98\Include
+# In order for the makefile to work, you have to start "Visual Studio xxxx Command prompt"
+#                                                   or "Visual Studio xxxx x64 Cross tools command prompt"
+# I'm not sure about pre 2005 settings. Maybe you need to use them for 2005 as well, please report
+
+CFLAGS=-O2 -I./include -I../include -D_WIN32 /GR- /EHs-c-
+
+# VS 2008 64bit: CFLAGS=-O2 -I./include -I../include -D_WIN64 /GR- /EHs-c-
+# VS 2008 32bit: CFLAGS=-O2 -I./include -I../include -D_WIN32 /GR- /EHs-c-
+# VS pre 2005  : CFLAGS=-O2 -I./include -I../include -D_WIN32 /GR- /GX-
+
+# The /EHsc options seems to be needed by .NET 2003 compiler.
+# I'm not sure if they interfere with older versions, please report about it.
+CXXFLAGS=-O2 -I./include -I../include -D_WIN32 /GR- /EHsc
+
+# VC 2008 64bit: CXXFLAGS=-O2 -I./include -I../include -D_WIN64 /GR- /EHsc
+# VC 2008 32bit: CXXFLAGS=-O2 -I./include -I../include -D_WIN32 /GR- /EHsc
+# VS pre 2005  : CXXFLAGS=-O2 -I./include -I../include -D_WIN32 /GR- /GX- /EHsc
+
+OBJDIR=obj_ms
+
+#clean default extension list
+.SUFFIXES:
+#append extensions to list
+.SUFFIXES: .cc .cpp .c
+
+SRC1 = ../
+SRC2 = ../compat
+SRC3 = ../names
+SRC4 = ../stream
+SRC5 = ../classes
+SRC6 = ../classes/alcon
+SRC7 = ../classes/dos
+SRC8 = ../classes/linux
+SRC9 = ../classes/qnx4
+SRCA = ../classes/qnxrtp
+SRCB = ../classes/unix
+SRCC = ../classes/win32
+SRCD = ../classes/wingr
+SRCE = ../classes/winnt
+SRCF = ../classes/x11
+#SRC7 = ./examples/tutorial
+#SRC3 = ./
+
+CC=cl /nologo
+CXX=cl /nologo
+
+OBJS=@TV_OBJS_MSVC@
+
+tvex: libtv.lib
+	$(CXX) $(CXXFLAGS) /Tptvex.cc -link libtv.lib user32.lib gdi32.lib
+
+{$(SRC1)}.cc{$(OBJDIR)}.o:
+	$(CXX) -c $(CXXFLAGS) /Tp$? -Fo$*.o
+
+{$(SRC2)}.cc{$(OBJDIR)}.o:
+	$(CXX) -c $(CXXFLAGS) /Tp$? -Fo$*.o
+
+{$(SRC2)}.c{$(OBJDIR)}.o:
+	$(CC) $(CFLAGS) -c $? -Fo$*.o
+
+{$(SRC3)}.cc{$(OBJDIR)}.o:
+	$(CXX) -c $(CXXFLAGS) /Tp$? -Fo$*.o
+
+{$(SRC4)}.cc{$(OBJDIR)}.o:
+	$(CXX) -c $(CXXFLAGS) /Tp$? -Fo$*.o
+
+{$(SRC5)}.cc{$(OBJDIR)}.o:
+	$(CXX) -c $(CXXFLAGS) /Tp$? -Fo$*.o
+
+{$(SRC6)}.cc{$(OBJDIR)}.o:
+	$(CXX) -c $(CXXFLAGS) /Tp$? -Fo$*.o
+
+{$(SRC7)}.cc{$(OBJDIR)}.o:
+	$(CXX) -c $(CXXFLAGS) /Tp$? -Fo$*.o
+   
+{$(SRC8)}.cc{$(OBJDIR)}.o:
+	$(CXX) -c $(CXXFLAGS) /Tp$? -Fo$*.o
+
+{$(SRC9)}.cc{$(OBJDIR)}.o:
+	$(CXX) -c $(CXXFLAGS) /Tp$? -Fo$*.o
+
+{$(SRCA)}.cc{$(OBJDIR)}.o:
+	$(CXX) -c $(CXXFLAGS) /Tp$? -Fo$*.o
+
+{$(SRCB)}.cc{$(OBJDIR)}.o:
+	$(CXX) -c $(CXXFLAGS) /Tp$? -Fo$*.o
+
+{$(SRCC)}.cc{$(OBJDIR)}.o:
+	$(CXX) -c $(CXXFLAGS) /Tp$? -Fo$*.o
+
+{$(SRCD)}.cc{$(OBJDIR)}.o:
+	$(CXX) -c $(CXXFLAGS) /Tp$? -Fo$*.o
+
+{$(SRCE)}.cc{$(OBJDIR)}.o:
+	$(CXX) -c $(CXXFLAGS) /Tp$? -Fo$*.o
+
+{$(SRCF)}.cc{$(OBJDIR)}.o:
+	$(CXX) -c $(CXXFLAGS) /Tp$? -Fo$*.o
+
+all:: libtv.lib
+
+libtv.lib : $(OBJS)
+	-del libtv.lib
+	lib @<<
+/OUT:libtv.lib
+$(OBJS)
+<<
+
+clean:
+	del -f $(OBJS)
+	del -f $(TUTORIAL)
+
